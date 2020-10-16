@@ -177,6 +177,20 @@ if(WITH_KVS)
   add_executable(ceph_kvstorebench ${kvstorebench_srcs})
   target_link_libraries(ceph_kvstorebench librados global ${BLKID_LIBRARIES} ${CMAKE_DL_LIBS})
   install(TARGETS ceph_kvstorebench DESTINATION bin)
+  set(gflags_DIR "/home/irteamsu/gtest/gflags/lib/cmake/gflags")
+  add_executable(bluefs_bench
+    bluefs_bench.cc
+    )
+  target_include_directories(bluefs_bench PUBLIC "/home1/irteamsu/gtest/include/gflags")
+  target_link_libraries(bluefs_bench
+    os 
+    global 
+    RocksDB::RocksDB
+    gflags
+    )
+  install(TARGETS bluefs_bench
+    DESTINATION bin)
+
 endif(WITH_KVS)
 
 # ceph_objectstore_bench

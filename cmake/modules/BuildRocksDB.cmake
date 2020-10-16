@@ -39,6 +39,13 @@ function(build_rocksdb)
   list(APPEND rocksdb_CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE})
   list(APPEND rocksdb_CMAKE_ARGS -DFAIL_ON_WARNINGS=OFF)
   list(APPEND rocksdb_CMAKE_ARGS -DUSE_RTTI=1)
+
+  set(gflags_DIR "/home/irteamsu/gtest/lib/cmake/gflags")
+  find_package(gflags REQUIRED)
+  list(APPEND rocksdb_INTERFACE_LINK_LIBRARIES gflags::gflags)
+  list(APPEND rocksdb_CMAKE_ARGS -DCMAKE_CXX_FLAGS="-DGFLAGS=gflags")
+  list(APPEND rocksdb_CMAKE_ARGS -DCMAKE_C_FLAGS="-DGFLAGS=gflags")
+
   CHECK_C_COMPILER_FLAG("-Wno-stringop-truncation" HAS_WARNING_STRINGOP_TRUNCATION)
   if(HAS_WARNING_STRINGOP_TRUNCATION)
     list(APPEND rocksdb_CMAKE_ARGS -DCMAKE_C_FLAGS="-Wno-stringop-truncation")
