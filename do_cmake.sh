@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -x
+rm -rf build
 git submodule update --init --recursive
 if test -e build; then
     echo 'build dir already exists; rm -rf build and re-run'
@@ -52,7 +53,7 @@ if type cmake3 > /dev/null 2>&1 ; then
 else
     CMAKE=cmake
 fi
-${CMAKE} -DCMAKE_BUILD_TYPE=Debug $ARGS "$@" .. || exit 1
+${CMAKE} -DCMAKE_BUILD_TYPE=RelWithDebInfo $ARGS "$@" .. || exit 1
 
 # minimal config to find plugins
 cat <<EOF > ceph.conf
